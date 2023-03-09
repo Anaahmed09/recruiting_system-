@@ -1,3 +1,10 @@
+// demo
+https://github.com/sayedazzam15/intake_43_opensource_laravel
+git clone git@github.com:Anaahmed09/recruiting_system-.git
+composer install
+php artisan key:generate
+
+
 // command lines
 php artisan migrate
 php artisan db:seed --class=AdminSeeder
@@ -11,5 +18,3 @@ php artisan db:seed --class=JobUserSeeder
 protected $perPage = 5;
 protected $guarded = [];
 
-// demo
-https://github.com/sayedazzam15/intake_43_opensource_laravel
