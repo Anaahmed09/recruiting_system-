@@ -1,0 +1,15 @@
+// command lines
+php artisan migrate
+php artisan db:seed --class=AdminSeeder
+php artisan db:seed --class=UserSeeder
+php artisan db:seed --class=JobSeeder
+php artisan db:seed --class=QuestionSeeder
+php artisan db:seed --class=JobUserSeeder
+
+// variables
+
+protected $perPage = 5;
+protected $guarded = [];
+
+// demo
+https://github.com/sayedazzam15/intake_43_opensource_laravel
