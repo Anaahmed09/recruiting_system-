@@ -26,6 +26,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('login', [AuthController::class, 'login']);
 Route::get('test', [AuthController::class, 'test'])->middleware('auth:sanctum');
 
+
+Route::get('/Question',[QuestionController::class,'index']);
+Route::post('/Question',[QuestionController::class,'store']);
+Route::delete('/Question/{Question}', [QuestionController::class, 'destroy']);
+Route::get('/Question/{Question}', [QuestionController::class, 'show']);
+Route::put('/Question/{Question}', [QuestionController::class, 'update']);
+
+
+
+
+
 // Route::apiResource('admin', AdminController::class);
 // Route::apiResource('job', JobController::class);
 // Route::apiResource('question', QuestionController::class);
