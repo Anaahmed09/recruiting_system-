@@ -54,9 +54,19 @@ class QuestionController extends Controller
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, Question $question)
+  public function update(QuestionRequest $request, Question $Question)
   {
-    //
+    try
+    {
+      $Question = Question::find($Question);
+      $Question = $Question->update($request->all());
+    }
+    catch(\Throwable $th)
+    {
+      return response()->json(['Message' => 'Server is not available now please try again later '],503);
+    }
+
+    return response()->json(['data' => $Question],201);
   }
 
   /**
@@ -64,7 +74,7 @@ class QuestionController extends Controller
    */
   public function destroy(Question $Question)
   {
-    
+
     try
     {
       $Question = Question::find($Question);
