@@ -10,8 +10,10 @@ class Question extends Model
   protected $guarded = [];
   public $timestamps = true;
   use HasFactory;
+
   public function job()
   {
     return $this->belongsTo(Job::class);
   }
+  
 }

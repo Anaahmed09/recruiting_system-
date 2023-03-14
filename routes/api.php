@@ -3,7 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\JobController;
+use App\Http\Controllers\Api\JobController;
 use App\Http\Controllers\QuestionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +28,24 @@ Route::delete('logout/{token?}', [AuthController::class, 'logout'])->name('logou
   ->middleware('auth:sanctum');
 
 Route::get('test', [AuthController::class, 'test'])->middleware('auth:sanctum');
+
+Route::get('jobs',[JobController::class,'index']);
+Route::get('show/{id}',[JobController::class,'show']);
+
+Route::put('update/{id}',[JobController::class,'edit']);
+
+Route::delete('destroy/{id}',[JobController::class,'destroy']);
+
+Route::post('store',[JobController::class,'store']);
+
+Route::get('count',[JobController::class,'count']);
+
+
+Route::get('available',[JobController::class,'available']);
+
+Route::get('search',[JobController::class,'search']);
+
+
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
   Route::get('/admin', [AdminController::class, 'index']);
