@@ -17,8 +17,8 @@ class QuestionController extends Controller
   public function index()
   {
     $Questions = Question::get();
-    return response()->json(['data' => $Questions]);
-    // return $Questions->count();
+    //return response()->json(['data' => $Questions]);
+      return $Questions->count();
   }
 
   /**
