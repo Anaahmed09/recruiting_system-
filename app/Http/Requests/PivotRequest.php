@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class JobRequest extends FormRequest
+class PivotRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,11 @@ class JobRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'=> 'required|string',
-            'description' => 'required|string',
-            'start_date' => 'required|date',
-            'end_data' => 'required|date',
-            'admin_id' => 'required|exists:admins,id'
+            'user_id'=> 'required|exists:users,id',
+            'job_id' => 'required|exists:jobs,id',
+            'numbers_of_wrong_answers' => 'required|digits_between:1,2',
+            'numbers_of_right_answers' => 'required|digits_between:1,2',
+            'status' => 'in:pending, accepted,rejected',
         ];
     }
 }

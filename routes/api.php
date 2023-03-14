@@ -26,6 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('login', [AuthController::class, 'login']);
 Route::get('test', [AuthController::class, 'test'])->middleware('auth:sanctum');
 
+//////////////nesma//////////////////////////////
 Route::get('jobs',[JobController::class,'index']);
 Route::get('show/{id}',[JobController::class,'show']);
 
@@ -42,6 +43,13 @@ Route::get('available',[JobController::class,'available']);
 
 Route::get('search',[JobController::class,'search']);
 
+/////////////////nahed/////////////////////////
+route::get('test2',[JobController::class,'indexcandidate']);
+route::get('test2/{id}',[JobController::class,'showcandidate']);
+route::get('countcandidate',[JobController::class,'countcandidate']);
+Route::get('searchcandidate',[JobController::class,'searchcandidate']);
+route::put('update/{job_id}/{user_id}',[JobController::class,'update']);
+//////////////////////////////////////////////////////
 
 
 // Route::apiResource('admin', AdminController::class);
