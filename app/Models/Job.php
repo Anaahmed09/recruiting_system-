@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Job extends Model
 {
   use HasFactory;
+  protected $guarded=[];
+  protected $perPage = 5;
   public function admin()
   {
     return $this->belongsTo(Admin::class);
