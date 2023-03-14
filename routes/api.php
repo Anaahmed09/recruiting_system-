@@ -22,16 +22,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
   return $request->user();
 });
 
-
 Route::post('login', [AuthController::class, 'login']);
 Route::get('test', [AuthController::class, 'test'])->middleware('auth:sanctum');
 
 
+//APIs for  Questions ..
 Route::get('/Question',[QuestionController::class,'index']);
 Route::post('/Question',[QuestionController::class,'store']);
-Route::delete('/Question/{Question}', [QuestionController::class, 'destroy']);
-Route::get('/Question/{Question}', [QuestionController::class, 'show']);
-Route::put('/Question/{Question}', [QuestionController::class, 'update']);
+Route::get('/Question/{id}', [QuestionController::class, 'show']);
+Route::delete('/Question/{id}', [QuestionController::class, 'destroy']);
+Route::get('/SearchQuestion',[QuestionController::class,'SearchQuestion']);
+Route::put('/Question/{id}', [QuestionController::class, 'edit']);
 
 
 
