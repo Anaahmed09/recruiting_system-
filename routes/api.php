@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\QuestionController;
@@ -26,16 +27,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('login', [AuthController::class, 'login']);
 Route::get('test', [AuthController::class, 'test'])->middleware('auth:sanctum');
 
-// Route::apiResource('admin', AdminController::class);
-// Route::apiResource('job', JobController::class);
-// Route::apiResource('question', QuestionController::class);
+
+Route::apiResource('admin', AdminController::class);
+Route::apiResource('job', JobController::class);
+Route::apiResource('question', QuestionController::class);
 
 
 
-// Route::group(['middleware' => ['auth:sanctum']], function () {
-//   Route::get('/admin', [AdminController::class, 'index']);
-//   Route::post('/admin', [AdminController::class, 'store']);
-//   Route::get('/admin/{admin}', [AdminController::class, 'show']);
-//   Route::put('/admin/{admin}', [AdminController::class, 'update']);
-//   Route::delete('/admin/{admin}', [AdminController::class, 'destroy']);
-// });
+Route::group(['middleware' => ['auth:sanctum']], function () {
+  Route::get('/admin', [AdminController::class, 'index']);
+  Route::post('/admin', [AdminController::class, 'store']);
+  Route::get('/admin/{admin}', [AdminController::class, 'show']);
+  Route::put('/admin/{admin}', [AdminController::class, 'update']);
+  Route::delete('/admin/{admin}', [AdminController::class, 'destroy']);
+});
+
+
+// User Routes APIs
+Route::apiResource('users', UserController::class);
