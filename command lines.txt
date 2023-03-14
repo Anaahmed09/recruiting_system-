@@ -2,6 +2,8 @@
 https://github.com/sayedazzam15/intake_43_opensource_laravel
 git clone git@github.com:Anaahmed09/recruiting_system-.git
 composer install
+npm i
+composer Dump-autoload
 php artisan key:generate
 
 
@@ -18,3 +20,121 @@ php artisan db:seed --class=JobUserSeeder
 protected $perPage = 5;
 protected $guarded = [];
 
+  // $users = User::get();
+  // if (Auth::user()->tokenCan('userTest')) {
+  //   return response()->json([
+  //     'error' => 'false',
+  //     'data' => 'true',
+  //   ]);
+  // }
+  // return response()->json([
+  //   ['error' => 'true'], 401
+  // ]);
+
+  //admin
+
+  // $user = Auth::guard('sanctum')->user(); 2
+  // if (get_class($user) == Admin::class &&  $user->tokenCan('job.showAll')) {
+  //   return response()->json([
+  //     'error' => 'false',
+  //     'data' => 'job.showAll'
+  //   ], 200);
+  //   }
+  //   return response()->json([
+  //     'error' => 'true',
+  //     'data' => 'job.showAll'
+  //   ], 401);
+
+
+  // $user = Auth::guard('sanctum')->user(); 3
+  // if (get_class($user) == Admin::class &&  $user->tokenCan('job.edit')) {
+  //   return response()->json([
+  //     'error' => 'false',
+  //     'data' => 'job.edit'
+  //   ], 200);
+  // }
+  // return response()->json([
+  //   'error' => 'true',
+  //   'data' => 'job.edit'
+  // ], 401);
+  // $user = Auth::guard('sanctum')->user(); 4
+  // if (get_class($user) == Admin::class &&  $user->tokenCan('job.delete')) {
+  //   return response()->json([
+  //     'error' => 'false',
+  //     'data' => 'job.delete'
+  //   ], 200);
+  // }
+  // return response()->json([
+  //   'error' => 'true',
+  //   'data' => 'job.delete'
+  // ], 401);
+  // $user = Auth::guard('sanctum')->user(); 5
+  // if (get_class($user) == Admin::class &&  $user->tokenCan('question.create')) {
+  //   return response()->json([
+  //     'error' => 'false',
+  //     'data' => 'question.create'
+  //   ], 200);
+  // }
+  // return response()->json([
+  //   'error' => 'true',
+  //   'data' => 'question.create'
+  // ], 401);
+  // 'job.create', 'job.showAll', 'job.edit', 'job.delete',
+  //     'question.create', 'question.show', 'question.edit', 'question.delete',
+  //     'candidate.showAll', 'candidate.acceptOrReject'
+
+  // $user = Auth::guard('sanctum')->user(); 6
+  // if (get_class($user) == Admin::class &&  $user->tokenCan('question.show')) {
+  //   return response()->json([
+  //     'error' => 'false',
+  //     'data' => 'question.show'
+  //   ], 200);
+  // }
+  // return response()->json([
+  //   'error' => 'true',
+  //   'data' => 'question.show'
+  // ], 401);
+  // $user = Auth::guard('sanctum')->user(); 7
+  // if (get_class($user) == Admin::class &&  $user->tokenCan('question.edit')) {
+  //   return response()->json([
+  //     'error' => 'false',
+  //     'data' => 'question.edit'
+  //   ], 200);
+  // }
+  // return response()->json([
+  //   'error' => 'true',
+  //   'data' => 'question.edit'
+  // ], 401);
+  // $user = Auth::guard('sanctum')->user();  8
+  // if (get_class($user) == Admin::class &&  $user->tokenCan('question.delete')) {
+  //   return response()->json([
+  //     'error' => 'false',
+  //     'data' => 'question.delete'
+  //   ], 200);
+  // }
+  // return response()->json([
+  //   'error' => 'true',
+  //   'data' => 'question.delete'
+  // ], 401);
+  // $user = Auth::guard('sanctum')->user();  9
+  // if (get_class($user) == Admin::class &&  $user->tokenCan('candidate.showAll')) {
+  //   return response()->json([
+  //     'error' => 'false',
+  //     'data' => 'candidate.showAll'
+  //   ], 200);
+  // }
+  // return response()->json([
+  //   'error' => 'true',
+  //   'data' => 'candidate.showAll'
+  // ], 401);
+  // $user = Auth::guard('sanctum')->user();  10
+  // if (get_class($user) == Admin::class &&  $user->tokenCan('candidate.acceptOrReject')) {
+  //   return response()->json([
+  //     'error' => 'false',
+  //     'data' => 'candidate.acceptOrReject'
+  //   ], 200);
+  // }
+  // return response()->json([
+  //   'error' => 'true',
+  //   'data' => 'candidate.acceptOrReject'
+  // ], 401);
