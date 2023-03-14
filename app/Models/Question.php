@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
+  protected $guarded = [];
+  public $timestamps = true;
   use HasFactory;
   public function job()
   {

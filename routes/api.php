@@ -58,6 +58,20 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 //   Route::delete('/user/{user}', [UserController::class, 'destroy']);
 // });
 
+
+
+//APIs for  Questions ..
+Route::get('/Question',[QuestionController::class,'index']);
+Route::post('/Question',[QuestionController::class,'store']);
+Route::get('/Question/{id}', [QuestionController::class, 'show']);
+Route::delete('/Question/{id}', [QuestionController::class, 'destroy']);
+Route::get('/SearchQuestion',[QuestionController::class,'SearchQuestion']);
+Route::put('/Question/{id}', [QuestionController::class, 'edit']);
+
+
+
+
+
 // Route::apiResource('admin', AdminController::class);
 // Route::apiResource('job', JobController::class);
 // Route::apiResource('question', QuestionController::class);
