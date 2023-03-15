@@ -20,8 +20,7 @@ class QuestionController extends Controller
       'message' => 'unauthorized'
     ], 401);
     $Questions = Question::get();
-    //return response()->json(['data' => $Questions]);
-    return $Questions->count();
+    return response()->json(['count' => $Questions->count()], 200);
   }
 
   /**
@@ -30,27 +29,25 @@ class QuestionController extends Controller
   public function store(QuestionRequest $request)
   {
     try {
-      $Questions = Question::create($request->all());
+      Question::create($request->all());
+      return response()->json(['created' => 'created'], 201);
     } catch (\Throwable $th) {
       return response()->json(['Message' => 'Server is not available now please try again later '], 503);
     }
-
-    return response()->json(['data' => $Questions], 201);
   }
 
   /**
    * Display the specified resource with id
    */
-  public function show($id)
-  {
-    try {
-      $Questions = Job::with('question')->where('id', $id)->get();
-    } catch (\Throwable $th) {
-      return response()->json(['Message' => 'Server is not available now please try again later '], 503);
-    }
-
-    return response()->json(['data' => $Questions], 200);
-  }
+  // public function show($id)
+  // {
+  //   try {
+  //     $Questions = Job::with('question')->where('id', $id)->get();
+  //     return response()->json(['data' => $Questions], 200);
+  //   } catch (\Throwable $th) {
+  //     return response()->json(['Message' => 'Server is not available now please try again later '], 503);
+  //   }
+  // }
 
 
   /**
@@ -58,11 +55,11 @@ class QuestionController extends Controller
    */
   public function SearchQuestion(SearchQuestion $request)
   {
-
     try {
       $characters = $request->title;
-      $Question = Question::where('title', 'LIKE', "%{$characters}%")->get();
-      return response()->json(['results' => $Question,], 201);
+      $Question = Question::select('title', 'description', 'Answer1', 'Answer2', 'Answer3', 'RightAnswer')
+        ->where('title', 'LIKE', "%{$characters}%")->get();
+      return response()->json(['results' => $Question], 200);
     } catch (\Throwable $th) {
       return response()->json(['Message' => 'Server is not available now please try again later '], 503);
     }
@@ -74,12 +71,10 @@ class QuestionController extends Controller
   public function edit(EditQuestion $request, $id)
   {
     try {
-      $Question = Question::where('id', $id)->update($request->all());
+      return response()->json(['updated' => Question::where('id', $id)->update($request->all())], 201);
     } catch (\Throwable $th) {
       return response()->json(['Message' => 'Server is not available now please try again later '], 503);
     }
-
-    // return response()->json(['data' => $Question], 201);
   }
 
   /**
@@ -94,10 +89,9 @@ class QuestionController extends Controller
     try {
       $Question = Question::where('id', $id);
       $Question->delete();
+      return response()->json(['Message' => 'deleted', 200]);
     } catch (\Throwable $th) {
       return response()->json(['Message' => 'Server is not available now please try again later '], 503);
     }
-
-    return response()->json(['Message' => 'You deleted a question successfully ', 201]);
   }
 }

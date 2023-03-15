@@ -28,7 +28,6 @@ class JobRequest extends FormRequest
       'description' => 'required|string',
       'start_date' => 'required|date',
       'end_data' => 'required|date',
-      'admin_id' => 'required|exists:admins,id'
     ];
   }
 }

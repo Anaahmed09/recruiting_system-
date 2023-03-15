@@ -24,14 +24,12 @@ class EditQuestion extends FormRequest
   public function rules(): array
   {
     return [
-
       'title' => 'required|string',
       'description' => 'required|string',
       'Answer1' => 'required|string',
       'Answer2' => 'required|string',
       'Answer3' => 'required|string',
       'RightAnswer' => 'required|string'
-
     ];
   }
 }

@@ -25,7 +25,6 @@ class QuestionRequest extends FormRequest
   public function rules(): array
   {
     return [
-
       'job_id' => 'required|exists:jobs,id',
       'title' => 'required|string',
       'description' => 'required|string',
@@ -33,7 +32,6 @@ class QuestionRequest extends FormRequest
       'Answer2' => 'required|string',
       'Answer3' => 'required|string',
       'RightAnswer' => 'required|string',
-
     ];
   }
 }

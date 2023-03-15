@@ -28,9 +28,9 @@ Route::delete('logout/{token?}', [AuthController::class, 'logout'])->name('logou
   ->middleware('auth:sanctum');
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-  Route::get('jobs', [JobController::class, 'index']);
-  Route::get('show/{id}', [JobController::class, 'show']);
-  Route::put('/job/{job}', [JobController::class, 'update']);
+  Route::get('/job', [JobController::class, 'index']);
+  Route::get('/show/{id}', [JobController::class, 'show']);
+  Route::put('/job/{job}', [JobController::class, 'edqit']);
   Route::delete('/job/{job}', [JobController::class, 'destroy']);
   Route::post('/job', [JobController::class, 'store']);
   Route::get('/job.count', [JobController::class, 'count']);
@@ -39,71 +39,32 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 });
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+  route::get('/candidate', [JobController::class, 'indexcandidate']);
+  route::get('/candidate.count', [JobController::class, 'countcandidate']);
+  Route::get('/candidate.search', [JobController::class, 'searchcandidate']);
+  route::put('/candidate', [JobController::class, 'update']);
+});
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
   Route::get('/question', [QuestionController::class, 'index']);
   Route::post('/question', [QuestionController::class, 'store']);
-  Route::get('/question/{question}', [QuestionController::class, 'show']);
-  Route::delete('/Question/{question}', [QuestionController::class, 'destroy']);
+  Route::delete('/question/{question}', [QuestionController::class, 'destroy']);
   Route::get('/question.search', [QuestionController::class, 'SearchQuestion']);
   Route::put('/question/{question}', [QuestionController::class, 'edit']);
+  // Route::get('/question/{question}', [QuestionController::class, 'show']);
 });
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
   Route::get('/user', [UserController::class, 'index']);
   Route::post('/user', [UserController::class, 'store']);
-  Route::get('/user/{user}', [UserController::class, 'show']);
-  Route::put('/user/{user}', [UserController::class, 'update']);
-  Route::delete('/user/{user}', [UserController::class, 'destroy']);
+  Route::get('/user.show', [UserController::class, 'show']);
+  Route::put('/user.update', [UserController::class, 'update']);
+  route::get('/candidate.show', [UserController::class, 'showcandidate']);
+  Route::post('/candidate.store', [UserController::class, 'storeCandidate']);
+  // Route::delete('/user/{user}', [UserController::class, 'destroy']);
 });
-
-// Route::group(['middleware' => ['auth:sanctum']], function () {
-//   Route::get('jobs', [JobController::class, 'index']);
-//   Route::get('show/{id}', [JobController::class, 'show']);
-//   Route::put('update/{id}', [JobController::class, 'edit']);
-//   Route::delete('destroy/{id}', [JobController::class, 'destroy']);
-//   Route::post('store', [JobController::class, 'store']);
-//   Route::get('count', [JobController::class, 'count']);
-//   Route::get('available', [JobController::class, 'available']);
-//   Route::get('search', [JobController::class, 'search']);
-// });
-// Route::group(['middleware' => ['auth:sanctum']], function () {
-//   Route::get('/admin', [AdminController::class, 'index']);
-//   Route::post('/admin', [AdminController::class, 'store']);
-//   Route::get('/admin/{admin}', [AdminController::class, 'show']);
-//   Route::put('/admin/{admin}', [AdminController::class, 'update']);
-//   Route::delete('/admin/{admin}', [AdminController::class, 'destroy']);
-// });
-// Route::group(['middleware' => ['auth:sanctum']], function () {
-//   Route::get('/Question', [QuestionController::class, 'index']);
-//   Route::post('/Question', [QuestionController::class, 'store']);
-//   Route::get('/Question/{id}', [QuestionController::class, 'show']);
-//   Route::delete('/Question/{id}', [QuestionController::class, 'destroy']);
-//   Route::get('/SearchQuestion', [QuestionController::class, 'SearchQuestion']);
-//   Route::put('/Question/{id}', [QuestionController::class, 'edit']);
-// });
-
-// Route::group(['middleware' => ['auth:sanctum']], function () {
-//   Route::get('/job', [JobController::class, 'index']);
-//   Route::post('/job', [JobController::class, 'store']);
-//   Route::get('/job/{job}', [JobController::class, 'show']);
-//   Route::put('/job/{job}', [JobController::class, 'update']);
-//   Route::delete('/job/{job}', [JobController::class, 'destroy']);
-// });
-// Route::group(['middleware' => ['auth:sanctum']], function () {
-//   Route::get('/question', [QuestionController::class, 'index']);
-//   Route::post('/question', [QuestionController::class, 'store']);
-//   Route::get('/question/{question}', [QuestionController::class, 'show']);
-//   Route::put('/question/{question}', [QuestionController::class, 'update']);
-//   Route::delete('/question/{question}', [QuestionController::class, 'destroy']);
-// });
-
 
 // Route::apiResource('admin', AdminController::class);
 // Route::apiResource('job', JobController::class);
 // Route::apiResource('question', QuestionController::class);
 // Route::apiResource('user', UserController::class);
-
-
-
-
-
-

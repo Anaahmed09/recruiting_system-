@@ -23,26 +23,33 @@ class AuthController extends Controller
       $authUser = Auth::guard('admins')->user();
       $admin = Admin::find($authUser->id);
       $abilities = [
-        'job.create', 'job.showAll', 'job.edit', 'job.delete',
-        'question.create', 'question.show', 'question.edit', 'question.delete',
-        'candidate.showAll', 'candidate.acceptOrReject'
+        'job.create', 'job.count', 'job.showAll',
+        'job.edit', 'job.delete', 'question.create',
+        'question.edit', 'question.delete', 'question.count',
+        'question.search', 'candidate.showAll', 'candidate.acceptOrReject',
+        'candidate.count', 'candidate.search',
       ];
-      $token = $admin->createToken($device_name, $abilities, now()->addDays(1))->plainTextToken;
+      $token = $admin->createToken($device_name, $abilities, now()->addDays(9))->plainTextToken;
+      $admin = Auth::guard('admins')->user();
       return response()->json([
         'token' => $token,
-        'user' => Auth::guard('admins')->user()->name,
+        'full name' => $admin->name,
+        'img' => $admin->img
       ], 200);
     } elseif (Auth::guard('users')->attempt($credentials)) {
       $authUser = Auth::guard('users')->user();
       $user = User::find($authUser->id);
       $abilities = [
-        'job.showAll(available)', 'question.show', 'candidate.status',
-        'user.show', 'user.update'
+        'job.showAll(available)', 'candidate.status', 'candidate.store',
+        'user.show', 'user.update', 'user.idsJOb',
       ];
-      $token = $user->createToken($device_name, $abilities, Carbon::now()->addHours(3))->plainTextToken;
+      //  Carbon::now()->addHours(3)
+      $token = $user->createToken($device_name, $abilities, now()->addDays(9))->plainTextToken;
+      $user = Auth::guard('users')->user();
       return response()->json([
         'token' => $token,
-        'user' => Auth::guard('users')->user(),
+        'full name' => $user->name,
+        'img' => $user->img
       ], 200);
     } else {
       return response()->json([
@@ -80,23 +87,13 @@ class AuthController extends Controller
   public static function authorizationAdmin($ability)
   {
     $user = Auth::guard('sanctum')->user();
-    if (get_class($user) == Admin::class &&  $user->tokenCan($ability)) {
-      return true;
-    }
+    if (get_class($user) == Admin::class &&  $user->tokenCan($ability)) return true;
     return false;
   }
   public static function authorizationUser($ability)
   {
     $user = Auth::guard('sanctum')->user();
-    if (get_class($user) == User::class &&  $user->tokenCan($ability)) {
-      return response()->json([
-        'error' => 'false',
-        'data' => $ability
-      ], 200);
-    }
-    return response()->json([
-      'error' => 'true',
-      'data' => $ability
-    ], 401);
+    if (get_class($user) == User::class &&  $user->tokenCan($ability)) return true;
+    return false;
   }
 }

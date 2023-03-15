@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCandidateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -15,18 +17,17 @@ class UserController extends Controller
    * Display a listing of the resource.
    */
 
-  // $result = AuthController::authorizationUser('user.update');
-  // if (!$result) return response()->json([
-  //   'message' => 'unauthorized'
-  // ], 401);
-  // $result = AuthController::authorizationUser('user.idsJOb');
-  // if (!$result) return response()->json([
-  //   'message' => 'unauthorized'
-  // ], 401);
+
+
   public function index()
   {
-    $users = User::with('jobs')->paginate();
-    return $this->apiResponse($users, 200, 'ok');
+    $result = AuthController::authorizationUser('user.idsJOb');
+    if (!$result) return response()->json([
+      'message' => 'unauthorized'
+    ], 401);
+    $user = Auth::guard('sanctum')->user();
+    $job_ids =  $user->jobs()->select('job_id')->get();
+    return response()->json($job_ids, 200);
   }
 
 
@@ -39,46 +40,49 @@ class UserController extends Controller
       'name' => 'required|string',
       'email' => 'required|string|email|max:100|unique:users',
       'username' => 'required|string|unique:users',
+      'password' => 'required|min:8',
       'img' => 'string',
       'phone' => 'required|numeric|digits:11',
       'address' => 'string',
       'state' => 'string',
       'city' => 'string'
     ]);
+    $request['password'] = bcrypt($request->password);
     if ($validator->fails()) {
-      return $this->apiResponse(null, 400, $validator->errors());
+      return response()->json(['message' => $validator->errors()], 400);
     }
     $user = User::create($request->all());
     if ($user) {
-      return $this->apiResponse($user, 201, 'ok');
+      return response()->json(['message' => 'created'], 201);
     } else {
-      return $this->apiResponse(null, 400, 'the user not createds');
+      return response()->json(['message' => 'created error'], 400);
     }
   }
 
   /**
    * Display the specified resource.
    */
-  public function show(string $id)
+  public function show()
   {
     $result = AuthController::authorizationUser('user.show');
     if (!$result) return response()->json([
       'message' => 'unauthorized'
     ], 401);
-    $user = User::with('jobs')->find($id);
-    if ($user) {
-      return $this->apiResponse($user, 200, 'ok');
-    } else {
-      return $this->apiResponse(null, 404, 'the user not found');
-    }
+    $user = Auth::guard('sanctum')->user();
+    return response()->json($user, 200);
   }
 
 
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, string $id)
+  public function update(Request $request)
   {
+    $result = AuthController::authorizationUser('user.update');
+    if (!$result) return response()->json([
+      'message' => 'unauthorized'
+    ], 401);
+
     $validator = Validator::make($request->all(), [
       'name' => 'required|string',
       'phone' => 'required|numeric|digits:11',
@@ -86,34 +90,56 @@ class UserController extends Controller
       'state' => 'string',
       'city' => 'string'
     ]);
+
     if ($validator->fails()) {
-      return $this->apiResponse(null, 400, $validator->errors());
+      return response()->json(['message' => 'validation error'], 400);
     }
-    $user = User::find($id);
+    $user = Auth::guard('sanctum')->user();
     if (!$user) {
-      return $this->apiResponse(null, 404, 'The post not found');
+      return response()->json(['message' => 'this user not found'], 404);
     }
     $user->update($request->all());
     if ($user) {
-      return $this->apiResponse($user, 200, 'ok');
+      return response()->json(['message' => 'updated'], 201);
     }
   }
 
   /**
    * Remove the specified resource from storage.
    */
-  public function destroy(string $id)
+  // public function destroy(string $id)
+  // {
+  //   $user = User::find($id);
+  //   $user->jobs()->detach();
+  //   if (!$user) {
+  //     return $this->apiResponse(null, 404, 'the user not found');
+  //   }
+  //   $user->destroy($id);
+  //   if ($user) {
+  //     return $this->apiResponse(null, 200, 'ok');
+  //   }
+  // }
+  //
+  public function showcandidate()
   {
-
-    $user = User::find($id);
-    $user->jobs()->detach();
-
-    if (!$user) {
-      return $this->apiResponse(null, 404, 'the user not found');
+    $result = AuthController::authorizationUser('candidate.status');
+    if (!$result) return response()->json([
+      'message' => 'unauthorized'
+    ], 401);
+    $user = Auth::guard('sanctum')->user();
+    $users = $user->jobs()->get();
+    foreach ($users as $user) {
+      $result = $user->pivot->select('status', 'numbers_of_right_answers', 'numbers_of_wrong_answers')
+        ->where('user_id', $user->id)->get();
     }
-    $user->destroy($id);
-    if ($user) {
-      return $this->apiResponse(null, 200, 'ok');
-    }
+    return response()->json($result, 200);
+  }
+  public function storeCandidate(StoreCandidateRequest $request)
+  {
+    $user = Auth::guard('sanctum')->user();
+    $user->jobs()->attach($request->job_id, $request->all());
+    return response()->json([
+      'message' => 'created'
+    ], 201);
   }
 }
