@@ -1,13 +1,13 @@
 <?php
 
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\Api\UserController;
+
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Api\JobController;
 use App\Http\Controllers\Api\QuestionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Api\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
