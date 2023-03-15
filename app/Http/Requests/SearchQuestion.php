@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SearchQuestion extends FormRequest
@@ -11,7 +12,8 @@ class SearchQuestion extends FormRequest
    */
   public function authorize(): bool
   {
-    return true;
+    $result = AuthController::authorizationAdmin('question.search');
+    return $result;
   }
 
   /**

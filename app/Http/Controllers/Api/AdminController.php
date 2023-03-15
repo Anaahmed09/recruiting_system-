@@ -19,6 +19,10 @@ class AdminController extends Controller
     // if (!$result) return response()->json([
     //   'message' => 'unauthorized'
     // ], 401);
+    // $result = AuthController::authorizationAdmin('job.count');
+    // if (!$result) return response()->json([
+    //   'message' => 'unauthorized'
+    // ], 401);
     // $result = AuthController::authorizationAdmin('job.showAll');
     // if (!$result) return response()->json([
     //   'message' => 'unauthorized'
@@ -31,6 +35,7 @@ class AdminController extends Controller
     // if (!$result) return response()->json([
     //   'message' => 'unauthorized'
     // ], 401);
+    ////////////
     // $result = AuthController::authorizationAdmin('question.create');
     // if (!$result) return response()->json([
     //   'message' => 'unauthorized'
@@ -44,6 +49,15 @@ class AdminController extends Controller
     // if (!$result) return response()->json([
     //   'message' => 'unauthorized'
     // ], 401);
+    // $result = AuthController::authorizationAdmin('question.count');
+    // if (!$result) return response()->json([
+    //   'message' => 'unauthorized'
+    // ], 401);
+    // $result = AuthController::authorizationAdmin('question.search');
+    // if (!$result) return response()->json([
+    //   'message' => 'unauthorized'
+    // ], 401);
+    ////////////////////////////
     // $result = AuthController::authorizationAdmin('candidate.showAll');
     // if (!$result) return response()->json([
     //   'message' => 'unauthorized'
@@ -53,18 +67,6 @@ class AdminController extends Controller
     //   'message' => 'unauthorized'
     // ], 401);
     // $result = AuthController::authorizationAdmin('candidate.count');
-    // if (!$result) return response()->json([
-    //   'message' => 'unauthorized'
-    // ], 401);
-    // $result = AuthController::authorizationAdmin('job.count');
-    // if (!$result) return response()->json([
-    //   'message' => 'unauthorized'
-    // ], 401);
-    // $result = AuthController::authorizationAdmin('question.count');
-    // if (!$result) return response()->json([
-    //   'message' => 'unauthorized'
-    // ], 401);
-    // $result = AuthController::authorizationAdmin('question.search');
     // if (!$result) return response()->json([
     //   'message' => 'unauthorized'
     // ], 401);
@@ -83,7 +85,7 @@ class AdminController extends Controller
     //   'message' => 'unauthorized'
     // ], 401);
 
-    // $result = AuthController::authorizationUser('candidate.');
+    // $result = AuthController::authorizationUser('candidate.store');
     // if (!$result) return response()->json([
     //   'message' => 'unauthorized'
     // ], 401);
@@ -109,7 +111,7 @@ class AdminController extends Controller
   {
     // $user = Auth::guard('sanctum')->user();
     $user = User::find(3);
-    $user->jobs()->attach($request->job_id,$request->all());
+    $user->jobs()->attach($request->job_id, $request->all());
     return response()->json([
       'message' => 'created'
     ], 201);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,6 +14,15 @@ class UserController extends Controller
   /**
    * Display a listing of the resource.
    */
+
+  // $result = AuthController::authorizationUser('user.update');
+  // if (!$result) return response()->json([
+  //   'message' => 'unauthorized'
+  // ], 401);
+  // $result = AuthController::authorizationUser('user.idsJOb');
+  // if (!$result) return response()->json([
+  //   'message' => 'unauthorized'
+  // ], 401);
   public function index()
   {
     $users = User::with('jobs')->paginate();
@@ -51,6 +61,10 @@ class UserController extends Controller
    */
   public function show(string $id)
   {
+    $result = AuthController::authorizationUser('user.show');
+    if (!$result) return response()->json([
+      'message' => 'unauthorized'
+    ], 401);
     $user = User::with('jobs')->find($id);
     if ($user) {
       return $this->apiResponse($user, 200, 'ok');

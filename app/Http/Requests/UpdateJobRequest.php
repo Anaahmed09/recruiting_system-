@@ -5,14 +5,14 @@ namespace App\Http\Requests;
 use App\Http\Controllers\AuthController;
 use Illuminate\Foundation\Http\FormRequest;
 
-class JobRequest extends FormRequest
+class UpdateJobRequest extends FormRequest
 {
   /**
    * Determine if the user is authorized to make this request.
    */
   public function authorize(): bool
   {
-    $result = AuthController::authorizationAdmin('job.create');
+    $result = AuthController::authorizationAdmin('job.edit');
     return $result;
   }
 

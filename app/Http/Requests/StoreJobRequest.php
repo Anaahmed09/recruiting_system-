@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Controllers\AuthController;
 use Illuminate\Foundation\Http\FormRequest;
 
-class JobRequest extends FormRequest
+class StoreJobRequest extends FormRequest
 {
   /**
    * Determine if the user is authorized to make this request.

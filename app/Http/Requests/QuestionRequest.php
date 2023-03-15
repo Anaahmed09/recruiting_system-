@@ -3,6 +3,7 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Foundation\Http\FormRequest;
 
 class QuestionRequest extends FormRequest
@@ -12,7 +13,8 @@ class QuestionRequest extends FormRequest
    */
   public function authorize(): bool
   {
-    return true;  //all are authorized to send request
+    $result = AuthController::authorizationAdmin('question.create');
+    return $result; //all are authorized to send request
   }
 
   /**
