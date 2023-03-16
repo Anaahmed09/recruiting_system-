@@ -44,8 +44,8 @@ class Jobcontroller extends Controller
       'message' => 'unauthorized'
     ], 401);
     Question::where('job_id', $id)->delete();
-    $job = Job::find($id);
-    if ($job !== null) $job->user()->detach();
+    // $job = Job::find($id);
+    // if ($job !== null) $job->user()->detach();
     return response()->json([
       'deleted' => Job::where('id', $id)->delete()
     ], 200);
