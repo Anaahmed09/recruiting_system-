@@ -34,6 +34,7 @@ class AuthController extends Controller
       return response()->json([
         'token' => $token,
         'full name' => $admin->name,
+        'authorization' => 'admin',
         'img' => $admin->img
       ], 200);
     } elseif (Auth::guard('users')->attempt($credentials)) {
@@ -49,6 +50,7 @@ class AuthController extends Controller
       return response()->json([
         'token' => $token,
         'full name' => $user->name,
+        'authorization' => 'user',
         'img' => $user->img
       ], 200);
     } else {
