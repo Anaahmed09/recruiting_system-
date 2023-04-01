@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCandidateRequest;
 use App\Models\User;
 use App\Models\Job;
+use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -135,12 +136,14 @@ class UserController extends Controller
         ->where('user_id', $user->id)->get();
         $job_ids=$users->pivot->select('job_id')->where('user_id', $user->id)->get();
         $result2=array();
+        $result3=array();
         for ($i=0; $i <count( $job_ids) ; $i++) { 
-          $result2[$i]=Job::select('title')->where('id',$job_ids[$i]['job_id'])->get();
+          $result2[$i]=Job::select('title','id')->where('id',$job_ids[$i]['job_id'])->get();
+          $result3[$i]=Question::where('job_id',$job_ids[$i]['job_id'])->get()->count();
         }
       
     }
-    return response()->json(['candidate'=>$result ,'job'=>$result2]);
+    return response()->json(['candidate'=>$result ,'job'=>$result2,'count'=>$result3]);
   }
   public function storeCandidate(StoreCandidateRequest $request)
   {
