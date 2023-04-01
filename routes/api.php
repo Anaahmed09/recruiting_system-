@@ -30,7 +30,7 @@ Route::delete('logout/{token?}', [AuthController::class, 'logout'])->name('logou
 Route::group(['middleware' => ['auth:sanctum']], function () {
   Route::get('/job', [JobController::class, 'index']);
   Route::get('/show/{id}', [JobController::class, 'show']);
-  Route::put('/job/{job}', [JobController::class, 'edqit']);
+  Route::put('/job/{job}', [JobController::class, 'edit']);
   Route::delete('/job/{job}', [JobController::class, 'destroy']);
   Route::post('/job', [JobController::class, 'store']);
   Route::get('/job.count', [JobController::class, 'count']);
