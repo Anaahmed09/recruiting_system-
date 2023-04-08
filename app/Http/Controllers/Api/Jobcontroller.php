@@ -15,27 +15,21 @@ use Illuminate\Support\Facades\Auth;
 class Jobcontroller extends Controller
 {
 
-
-
-
-  ////////////////////////////////
-
-
   function index()
   {
     $result = AuthController::authorizationAdmin('job.showAll');
     if (!$result) return response()->json([
       'message' => 'unauthorized'
     ], 401);
-    $jobs = Job::select('title', 'description', 'start_date', 'end_data')->paginate();
-    return response()->json(['jobs' => $jobs], 200);
+    $jobs = Job::select('id', 'title', 'description', 'start_date', 'end_data')->with("question")->paginate();
+    return response()->json($jobs, 200);
   }
 
-  // function show($id)
-  // {
-  //   $job = Job::where('id', $id)->get();
-  //   return response()->json(['job' => $job]);
-  // }
+  function show($id)
+  {
+    $job = Job::where('id', $id)->with("question")->first();
+    return response()->json($job);
+  }
 
   function destroy($id)
   {
@@ -63,7 +57,14 @@ class Jobcontroller extends Controller
   function edit(JobRequest $request, $id)
   {
     $job = Job::where('id', $id);
-    $job->update($request->except(['_method', '_token']));
+    // $job->update($request->except(['_method', '_token']));
+    $job->update([
+      "title" => $request->title,
+      "description" => $request->description,
+      "start_date" => $request->start_date,
+      "end_data" => $request->end_data
+    ]);
+
     return response()->json(['create' => "created"], 201);
   }
 

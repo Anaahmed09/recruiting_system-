@@ -42,7 +42,7 @@ class UserController extends Controller
       'username' => 'required|string|unique:users',
       'password' => 'required|min:8',
       'img' => 'string',
-      'phone' => 'required|numeric|digits:11',
+      'phone' => 'required|string',
       'address' => 'string',
       'state' => 'string',
       'city' => 'string'
@@ -53,7 +53,7 @@ class UserController extends Controller
     }
     $user = User::create($request->all());
     if ($user) {
-      return response()->json(['message' => 'created'], 201);
+      return response()->json(["user" => $user, 'message' => 'created'], 201);
     } else {
       return response()->json(['message' => 'created error'], 400);
     }

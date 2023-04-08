@@ -46,11 +46,7 @@ class AuthController extends Controller
       //  Carbon::now()->addHours(3)
       $token = $user->createToken($device_name, $abilities, now()->addDays(9))->plainTextToken;
       $user = Auth::guard('users')->user();
-      return response()->json([
-        'token' => $token,
-        'full name' => $user->name,
-        'img' => $user->img
-      ], 200);
+      return response()->json($user, 200);
     } else {
       return response()->json([
         'error' => 'Unauthorized'
