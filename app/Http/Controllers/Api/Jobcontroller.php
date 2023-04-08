@@ -84,7 +84,7 @@ class Jobcontroller extends Controller
       'message' => 'unauthorized'
     ], 401);
     $date = now();
-    $job = Job::select('title', 'description', 'start_date', 'end_data')->where('end_data', '>', $date)->get();
+    $job = Job::select('id','title', 'description', 'start_date', 'end_data')->where('end_data', '>', $date)->get();
     return response()->json([$job]);
   }
 

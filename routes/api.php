@@ -51,7 +51,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
   Route::delete('/question/{question}', [QuestionController::class, 'destroy']);
   Route::get('/question.search', [QuestionController::class, 'SearchQuestion']);
   Route::put('/question/{question}', [QuestionController::class, 'edit']);
-  // Route::get('/question/{question}', [QuestionController::class, 'show']);
+  Route::get('/question/{question}', [QuestionController::class, 'show']);
 });
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
