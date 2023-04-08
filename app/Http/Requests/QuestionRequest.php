@@ -27,7 +27,6 @@ class QuestionRequest extends FormRequest
     return [
       'job_id' => 'required|exists:jobs,id',
       'title' => 'required|string',
-      'description' => 'required|string',
       'Answer1' => 'required|string',
       'Answer2' => 'required|string',
       'Answer3' => 'required|string',

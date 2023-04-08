@@ -33,7 +33,7 @@ class AuthController extends Controller
       $admin = Auth::guard('admins')->user();
       return response()->json([
         'token' => $token,
-        'full name' => $admin->name,
+        'full_name' => $admin->name,
         'authorization' => 'admin',
         'img' => $admin->img
       ], 200);
@@ -97,5 +97,15 @@ class AuthController extends Controller
     $user = Auth::guard('sanctum')->user();
     if (get_class($user) == User::class &&  $user->tokenCan($ability)) return true;
     return false;
+  }
+  public function isLoggedIn()
+  {
+    $user = Auth::guard('sanctum')->user();
+    if (get_class($user) == Admin::class) {
+      return response()->json('admin', 200);
+    } elseif (get_class($user) == User::class) {
+      return response()->json('user', 200);
+    } else
+      return response()->json('false', 401);
   }
 }

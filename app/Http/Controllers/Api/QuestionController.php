@@ -10,6 +10,7 @@ use App\Http\Requests\SearchQuestion;
 use App\Models\Job;
 use App\Models\Question;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\TryCatch;
 
 class QuestionController extends Controller
 {
@@ -39,15 +40,30 @@ class QuestionController extends Controller
   /**
    * Display the specified resource with id
    */
-  // public function show($id)
+  public function showQuestionsByIdJob($id, Request $request)
+  {
+    try {
+      $job = Job::with('question')->where('id', $id)->first();
+      $question = $job->question()->paginate($request->input('pre_page', 1));
+      return response()->json($question, 200);
+    } catch (\Throwable $th) {
+      return response()->json(['Message' => 'Server is not available now please try again later '], 503);
+    }
+  }
+  // public function show(Question $question)
   // {
   //   try {
-  //     $Questions = Job::with('question')->where('id', $id)->get();
-  //     return response()->json(['data' => $Questions], 200);
+  //     return response()->json($question,200);
   //   } catch (\Throwable $th) {
   //     return response()->json(['Message' => 'Server is not available now please try again later '], 503);
   //   }
   // }
+
+  public function show($job_id)
+  {
+    $Questions = Question::where('Job_id', $job_id)->get();
+    return response()->json(['data' => $Questions], 200);
+  }
 
 
   /**
@@ -57,9 +73,8 @@ class QuestionController extends Controller
   {
     try {
       $characters = $request->title;
-      $Question = Question::select('title', 'description', 'Answer1', 'Answer2', 'Answer3', 'RightAnswer')
-        ->where('title', 'LIKE', "%{$characters}%")->get();
-      return response()->json(['results' => $Question], 200);
+      $Question = Question::where('title', 'LIKE', "%{$characters}%")->where('job_id', $request->id)->get();
+      return response()->json($Question, 200);
     } catch (\Throwable $th) {
       return response()->json(['Message' => 'Server is not available now please try again later '], 503);
     }

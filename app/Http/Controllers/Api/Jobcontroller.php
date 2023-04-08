@@ -14,13 +14,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Jobcontroller extends Controller
 {
-
-
-
-
   ////////////////////////////////
-
-
   function index()
   {
     $result = AuthController::authorizationAdmin('job.showAll');
@@ -31,11 +25,11 @@ class Jobcontroller extends Controller
     return response()->json(['jobs' => $jobs], 200);
   }
 
-  // function show($id)
-  // {
-  //   $job = Job::where('id', $id)->get();
-  //   return response()->json(['job' => $job]);
-  // }
+  function show($id)
+  {
+    $job = Job::where('id', $id)->select('title')->first();
+    return response()->json($job, 200);
+  }
 
   function destroy($id)
   {
@@ -74,7 +68,7 @@ class Jobcontroller extends Controller
       'message' => 'unauthorized'
     ], 401);
     $jobs = Job::get()->count();
-    return response()->json(['job count' => $jobs], 200);
+    return response()->json(['count' => $jobs], 200);
   }
 
   function available()

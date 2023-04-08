@@ -1,9 +1,8 @@
 <?php
 
 use App\Http\Controllers\AdminController;
-
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Api\JobController;
+use App\Http\Controllers\Api\Jobcontroller;
 use App\Http\Controllers\Api\QuestionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,10 +25,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::delete('logout/{token?}', [AuthController::class, 'logout'])->name('logout')
   ->middleware('auth:sanctum');
+Route::get('isLoggedIn', [AuthController::class, 'isLoggedIn'])->middleware('auth:sanctum');
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
   Route::get('/job', [JobController::class, 'index']);
-  Route::get('/show/{id}', [JobController::class, 'show']);
+  Route::get('/job/{id}', [Jobcontroller::class, 'show']);
   Route::put('/job/{job}', [JobController::class, 'edqit']);
   Route::delete('/job/{job}', [JobController::class, 'destroy']);
   Route::post('/job', [JobController::class, 'store']);
@@ -49,9 +49,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
   Route::get('/question', [QuestionController::class, 'index']);
   Route::post('/question', [QuestionController::class, 'store']);
   Route::delete('/question/{question}', [QuestionController::class, 'destroy']);
-  Route::get('/question.search', [QuestionController::class, 'SearchQuestion']);
+  Route::post('/question.search', [QuestionController::class, 'SearchQuestion']);
   Route::put('/question/{question}', [QuestionController::class, 'edit']);
-  // Route::get('/question/{question}', [QuestionController::class, 'show']);
+  Route::get('/questions.job/{job_id}', [QuestionController::class, 'showQuestionsByIdJob']);
+  Route::get('/question/{question}', [QuestionController::class, 'show']);
 });
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
