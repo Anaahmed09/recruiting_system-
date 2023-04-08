@@ -1,7 +1,6 @@
 <?php
 
 namespace Database\Factories;
-
 use App\Models\Job;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -16,8 +15,10 @@ class QuestionFactory extends Factory
    * @return array<string, mixed>
    */
   public $num = 1;
+
   public function definition(): array
   {
+   
     return [
       'title' => fake()->realText(),
       'description' => fake()->text(),

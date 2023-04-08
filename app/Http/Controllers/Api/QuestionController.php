@@ -36,6 +36,12 @@ class QuestionController extends Controller
       return response()->json(['Message' => 'Server is not available now please try again later '], 503);
     }
   }
+  
+  public function show($job_id){
+      $Questions = Question::where('Job_id', $job_id)->get();
+      return response()->json(['data' => $Questions], 200);
+
+  }
 
   /**
    * Display the specified resource with id
