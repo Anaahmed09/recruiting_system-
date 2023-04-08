@@ -50,14 +50,14 @@ class QuestionController extends Controller
       return response()->json(['Message' => 'Server is not available now please try again later '], 503);
     }
   }
-  // public function show(Question $question)
-  // {
-  //   try {
-  //     return response()->json($question,200);
-  //   } catch (\Throwable $th) {
-  //     return response()->json(['Message' => 'Server is not available now please try again later '], 503);
-  //   }
-  // }
+  public function showAllQuestions(Question $question)
+  {
+    try {
+      return response()->json($question, 200);
+    } catch (\Throwable $th) {
+      return response()->json(['Message' => 'Server is not available now please try again later '], 503);
+    }
+  }
 
   public function show($job_id)
   {

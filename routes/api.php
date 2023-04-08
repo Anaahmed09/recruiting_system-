@@ -53,6 +53,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
   Route::put('/question/{question}', [QuestionController::class, 'edit']);
   Route::get('/questions.job/{job_id}', [QuestionController::class, 'showQuestionsByIdJob']);
   Route::get('/question/{question}', [QuestionController::class, 'show']);
+  Route::get('/question.showAll/{question}', [QuestionController::class, 'showAllQuestions']);
 });
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
