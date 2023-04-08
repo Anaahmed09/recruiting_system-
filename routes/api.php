@@ -29,8 +29,8 @@ Route::get('isLoggedIn', [AuthController::class, 'isLoggedIn'])->middleware('aut
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
   Route::get('/job', [JobController::class, 'index']);
-  Route::get('/job/{id}', [Jobcontroller::class, 'show']);
-  Route::put('/job/{job}', [JobController::class, 'edqit']);
+  Route::get('/job/{id}', [JobController::class, 'show']);
+  Route::put('/job/{job}', [JobController::class, 'edit']);
   Route::delete('/job/{job}', [JobController::class, 'destroy']);
   Route::post('/job', [JobController::class, 'store']);
   Route::get('/job.count', [JobController::class, 'count']);
@@ -56,11 +56,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
   Route::get('/question.showAll/{question}', [QuestionController::class, 'showAllQuestions']);
 });
 
+Route::post('/user', [UserController::class, 'store']);
+
 Route::group(['middleware' => ['auth:sanctum']], function () {
   Route::get('/user', [UserController::class, 'index']);
-  Route::post('/user', [UserController::class, 'store']);
-  Route::get('/user.show', [UserController::class, 'show']);
-  Route::put('/user.update', [UserController::class, 'update']);
+  Route::get('/user/{id}', [UserController::class, 'show']);
+  Route::put('/user/{id}', [UserController::class, 'update']);
   route::get('/candidate.show', [UserController::class, 'showcandidate']);
   Route::post('/candidate.store', [UserController::class, 'storeCandidate']);
   // Route::delete('/user/{user}', [UserController::class, 'destroy']);

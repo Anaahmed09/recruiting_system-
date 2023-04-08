@@ -19,7 +19,7 @@ class JobFactory extends Factory
   {
     return [
       'admin_id' => Admin::inRandomOrder()->first()->id,
-      'title' => fake()->title(),
+      'title' => fake()->name(),
       'description' => fake()->text(),
       'start_date' => fake()->dateTimeBetween($startDate = "-60 days", $endDate = "-20 days")->format('Y-m-d'),
       'end_data' => fake()->dateTimeBetween($startDate = "-15 days", $endDate = "now")->format('Y-m-d'),

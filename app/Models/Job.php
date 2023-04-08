@@ -24,5 +24,5 @@ class Job extends Model
     return $this->belongsToMany(User::class)->withPivot('numbers_of_wrong_answers', 'numbers_of_right_answers', 'status');
   }
 
-  
+
 }
