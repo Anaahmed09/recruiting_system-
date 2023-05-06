@@ -36,11 +36,29 @@ class QuestionController extends Controller
       return response()->json(['Message' => 'Server is not available now please try again later '], 503);
     }
   }
-  
-  public function show($job_id){
-      $Questions = Question::where('Job_id', $job_id)->get();
-      return response()->json(['data' => $Questions], 200);
 
+  public function show($job_id)
+  {
+    $result = AuthController::authorizationUser('question.show');
+    if (!$result)
+      $result = AuthController::authorizationAdmin('question.show');
+    if (!$result) return response()->json([
+      'message' => 'unauthorized'
+    ], 401);
+    $Questions = Question::where('Job_id', $job_id)->get();
+    return response()->json(['data' => $Questions], 200);
+  }
+
+  public function showToEdit($question_id)
+  {
+    $result = AuthController::authorizationUser('question.show');
+    if (!$result)
+      $result = AuthController::authorizationAdmin('question.show');
+    if (!$result) return response()->json([
+      'message' => 'unauthorized'
+    ], 401);
+    $Question = Question::where('id', $question_id)->first();
+    return response()->json(['data' => $Question], 200);
   }
 
   /**
@@ -65,11 +83,11 @@ class QuestionController extends Controller
     }
   }
 
-  public function show($job_id)
-  {
-    $Questions = Question::where('Job_id', $job_id)->get();
-    return response()->json(['data' => $Questions], 200);
-  }
+  // public function show($job_id)
+  // {
+  //   $Questions = Question::where('Job_id', $job_id)->get();
+  //   return response()->json(['data' => $Questions], 200);
+  // }
 
 
   /**

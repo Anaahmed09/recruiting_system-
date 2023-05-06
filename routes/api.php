@@ -53,14 +53,16 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
   Route::put('/question/{question}', [QuestionController::class, 'edit']);
   Route::get('/questions.job/{job_id}', [QuestionController::class, 'showQuestionsByIdJob']);
   Route::get('/question/{question}', [QuestionController::class, 'show']);
+  Route::get('/question/{question}/edit', [QuestionController::class, 'showToEdit']);
   Route::get('/question.showAll/{question}', [QuestionController::class, 'showAllQuestions']);
+  // Route::get('/question.showAll', [QuestionController::class, 'showAllQuestions']);
 });
 
 Route::post('/user', [UserController::class, 'store']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
   Route::get('/user', [UserController::class, 'index']);
-  Route::get('/user/{id}', [UserController::class, 'show']);
+  Route::get('/user.show', [UserController::class, 'show']);
   Route::put('/user/{id}', [UserController::class, 'update']);
   route::get('/candidate.show', [UserController::class, 'showcandidate']);
   Route::post('/candidate.store', [UserController::class, 'storeCandidate']);

@@ -130,18 +130,16 @@ class UserController extends Controller
     ], 401);
     $user = Auth::guard('sanctum')->user();
     $users = $user->jobs()->get();
-   
     foreach ($users as $users) {
       $result = $users->pivot->select('status', 'numbers_of_right_answers', 'numbers_of_wrong_answers')
         ->where('user_id', $user->id)->get();
         $job_ids=$users->pivot->select('job_id')->where('user_id', $user->id)->get();
         $result2=array();
         $result3=array();
-        for ($i=0; $i <count( $job_ids) ; $i++) { 
+        for ($i=0; $i <count( $job_ids) ; $i++) {
           $result2[$i]=Job::select('title','id')->where('id',$job_ids[$i]['job_id'])->get();
           $result3[$i]=Question::where('job_id',$job_ids[$i]['job_id'])->get()->count();
         }
-      
     }
     return response()->json(['candidate'=>$result ,'job'=>$result2,'count'=>$result3]);
   }

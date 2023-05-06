@@ -27,7 +27,7 @@ class AuthController extends Controller
         'job.edit', 'job.delete', 'question.create',
         'question.edit', 'question.delete', 'question.count',
         'question.search', 'candidate.showAll', 'candidate.acceptOrReject',
-        'candidate.count', 'candidate.search',
+        'candidate.count', 'candidate.search','question.show'
       ];
       $token = $admin->createToken($device_name, $abilities, now()->addDays(9))->plainTextToken;
       $admin = Auth::guard('admins')->user();
@@ -42,7 +42,7 @@ class AuthController extends Controller
       $user = User::find($authUser->id);
       $abilities = [
         'job.showAll(available)', 'candidate.status', 'candidate.store',
-        'user.show', 'user.update', 'user.idsJOb',
+        'user.show', 'user.update', 'user.idsJOb','question.show'
       ];
       //  Carbon::now()->addHours(3)
       $token = $user->createToken($device_name, $abilities, now()->addDays(9))->plainTextToken;
